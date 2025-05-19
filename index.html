@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feliz Aniversário</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       background-color: black;
-      overflow: hidden;
       font-family: Arial, sans-serif;
       position: relative;
+      height: 100%;
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
     .heart {
@@ -94,26 +96,24 @@
       z-index: 1;
     }
 
-    .play-button {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 20;
-      padding: 10px 20px;
+    .play-button-centered {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 24px;
       background: rgba(255,192,203,0.2);
       color: white;
       border: 1px solid pink;
       border-radius: 8px;
       cursor: pointer;
       font-family: cursive;
+      font-size: 1rem;
+      z-index: 2;
+      text-align: center;
     }
-
   </style>
 </head>
 <body>
 
-  <!-- Botão para ativar a música -->
-  <button class="play-button" onclick="document.getElementById('musica').play()">🎵 Tocar Música</button>
   <audio id="musica" loop>
     <source src="https://nagato15.github.io/fotos/Pausa.mp3" type="audio/mpeg">
   </audio>
@@ -131,6 +131,9 @@
       <span id="next">❯</span>
     </div>
   </div>
+
+  <!-- Botão centralizado para tocar música -->
+  <button class="play-button-centered" onclick="document.getElementById('musica').play()">🎵 Tocar Música</button>
 
   <!-- Caixa de mensagem romântica -->
   <div class="mensagem">
