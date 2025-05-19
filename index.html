@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Aniversário</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      position: relative;
+    }
+
+    .heart {
+      position: fixed;
+      top: 0;
+      color: rgba(255, 0, 0, 0.2);
+      font-size: 24px;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .carousel {
+      position: relative;
+      max-width: 80vw;
+      margin: 50px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      z-index: 1;
+    }
+
+    .carousel img {
+      width: 100%;
+      display: none;
+    }
+
+    .carousel img.active {
+      display: block;
+    }
+
+    .carousel .nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+
+    .carousel .nav span {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 24px;
+      border-radius: 50%;
+    }
+
+    .mensagem {
+      max-width: 80vw;
+      margin: 30px auto;
+      background: rgba(255, 192, 203, 0.1);
+      color: #ffe6f0;
+      padding: 30px 20px;
+      border-radius: 16px;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+      font-family: 'Brush Script MT', cursive, sans-serif;
+      text-align: center;
+      border: 1px solid rgba(255, 182, 193, 0.4);
+      z-index: 1;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 20;
+      padding: 10px 20px;
+      background: rgba(255,192,203,0.2);
+      color: white;
+      border: 1px solid pink;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: cursive;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Botão para ativar a música -->
+  <button class="play-button" onclick="document.getElementById('musica').play()">🎵 Tocar Música</button>
+  <audio id="musica" loop>
+    <source src="https://nagato15.github.io/fotos/Pausa.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Carrossel de imagens -->
+  <div class="carousel">
+    <img src="https://nagato15.github.io/fotos/Foto1.jpg" class="active" alt="Foto 1">
+    <img src="https://nagato15.github.io/fotos/Foto2.jpg" alt="Foto 2">
+    <img src="https://nagato15.github.io/fotos/Foto3.jpg" alt="Foto 3">
+    <img src="https://nagato15.github.io/fotos/Foto4.jpg" alt="Foto 4">
+    <img src="https://nagato15.github.io/fotos/Foto5.jpg" alt="Foto 5">
+    <img src="https://nagato15.github.io/fotos/Foto6.jpg" alt="Foto 6">
+    <div class="nav">
+      <span id="prev">❮</span>
+      <span id="next">❯</span>
+    </div>
+  </div>
+
+  <!-- Caixa de mensagem romântica -->
+  <div class="mensagem">
+    <div style="font-size: 2rem; margin-bottom: 10px;">💖 Feliz Aniversário! 💖</div>
+    <p>
+      Mesmo que a gente tenha começado há pouco tempo, já deu pra ver o quanto você é especial.<br />
+      Sua leveza, inteligência, generosidade e aquele sorriso que ilumina qualquer ambiente<br />
+      fazem de você uma pessoa única.
+    </p>
+    <p>
+      É inspirador ver como você trata os outros com carinho e vive com tanta autenticidade.<br />
+      Que esse novo ano te traga tudo o que você merece — e você merece o melhor de tudo. 💫
+    </p>
+  </div>
+
+  <script>
+    // Corações em cascata
+    const createHeart = () => {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerText = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 10000);
+    };
+
+    setInterval(createHeart, 200);
+
+    // Carrossel
+    const images = document.querySelectorAll('.carousel img');
+    const nextBtn = document.getElementById('next');
+    const prevBtn = document.getElementById('prev');
+    let current = 0;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextImage() {
+      current = (current + 1) % images.length;
+      showImage(current);
+    }
+
+    function prevImage() {
+      current = (current - 1 + images.length) % images.length;
+      showImage(current);
+    }
+
+    nextBtn.addEventListener('click', nextImage);
+    prevBtn.addEventListener('click', prevImage);
+
+    setInterval(nextImage, 8000); // Troca automática a cada 8 segundos
+  </script>
+</body>
+</html>
